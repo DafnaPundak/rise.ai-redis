@@ -136,4 +136,4 @@ const useCache = () => {
   };
 };
 
-module.exports = useCache;
+export default useCache;

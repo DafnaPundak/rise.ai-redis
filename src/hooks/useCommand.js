@@ -1,4 +1,4 @@
-const useCache = require("./useCache")
+import useCache  from"./useCache"
 
 const useCommand = () => {
   const {
