@@ -17,7 +17,8 @@ const useCommand = () => {
         .split(/(\s+)/)
         .filter((s) => s.trim().length > 0);
 
-      let [action, key, firstValue, secondValue, ...others] = commandString;
+      let [action, key, firstValue, ...others] = commandString;
+      console.log(others)
       const actionCommand = action.toUpperCase();
 
       function isValidCommand(actionCommand) {
@@ -34,15 +35,15 @@ const useCommand = () => {
       if (isValidCommand(actionCommand)) {
         switch (actionCommand) {
           case "SET":
-            return await setToCache(key, firstValue, secondValue);
+            return await setToCache(key, firstValue, others);
           case "GET":
-            return await getFromCache(key, firstValue, secondValue, others);
+            return await getFromCache(key, firstValue, others);
           case "DEL":
             return await deleteFromCache(key);
           case "EXISTS":
             return await existsInCache(key);
           case "EXPIRE":
-            return await expireCache(key, firstValue);
+            return await expireCache(key, firstValue, others);
           case "KEYS":
             return await keysCache(key, firstValue);
           default:

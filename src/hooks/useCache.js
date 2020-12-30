@@ -1,8 +1,8 @@
 const micromatch = require("micromatch");
 
 const useCache = () => {
-  async function setToCache(key, firstValue, secondValue) {
-    if (secondValue) {
+  async function setToCache(key, firstValue, others) {
+    if (others.length > 0) {
       throw new Error("Syntax error");
     }
     const cacheObj = await caches.open(key);
@@ -14,16 +14,14 @@ const useCache = () => {
     }
   }
 
-  async function getFromCache(key, firstValue, secondValue, others) {
+  async function getFromCache(key, firstValue, others) {
     if (key === undefined) {
       throw new Error("wrong number of arguments (given 0, expected 1)");
-    } else if (firstValue && secondValue && others) {
-      const givenArguments = 3 + others.length;
+    } else if (firstValue && others) {
+      const numberArguments = 2 + others.length;
       throw new Error(
-        `wrong number of arguments (given ${givenArguments}, expected 1)`
+        `wrong number of arguments (given ${numberArguments}, expected 1)`
       );
-    } else if (firstValue && secondValue) {
-      throw new Error("wrong number of arguments (given 3, expected 1)");
     } else if (firstValue) {
       throw new Error("wrong number of arguments (given 2, expected 1)");
     }
@@ -83,13 +81,18 @@ const useCache = () => {
     }
   }
 
-  async function expireCache(key, value) {
+  async function expireCache(key, firstValue, others) {
     if (key === undefined) {
       throw new Error("wrong number of arguments (given 0, expected 2)");
-    } else if (value === undefined) {
+    } else if (firstValue === undefined) {
       throw new Error("wrong number of arguments (given 1, expected 2)");
+    } else if (others.length > 0) {
+      const numberArguments = 2 + others.length;
+      throw new Error(
+        `wrong number of arguments (given ${numberArguments}, expected 2)`
+      );
     }
-    const time = Number(value) * 1000;
+    const time = Number(firstValue) * 1000;
     try {
       const response = caches.has(key).then(async function (keyIsInCache) {
         if (keyIsInCache) {
