@@ -18,7 +18,6 @@ const useCommand = () => {
         .filter((s) => s.trim().length > 0);
 
       let [action, key, firstValue, ...others] = commandString;
-      console.log(others)
       const actionCommand = action.toUpperCase();
 
       function isValidCommand(actionCommand) {

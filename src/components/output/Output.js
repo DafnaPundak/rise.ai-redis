@@ -4,13 +4,17 @@ import "./Output.css";
 const Output = ({ commandHistory }) => {
   return (
     <div className="outputContainer">
-      {commandHistory.map((command) => {
-        if (command.split(/(\s+)/)[0] === "Error:") {
-          return <div className="error">{command}</div>;
+      {commandHistory.slice(1).map((command) => {
+        if (command.text.split(/(\s+)/)[0] === "Error:") {
+          return (
+            <div key={command.id} className="error">
+              {command.text}
+            </div>
+          );
         } else {
           return (
-            <div key={commandHistory.indexOf(command)} className="command">
-              > {command}
+            <div key={command.id} className="command">
+              > {command.text}
             </div>
           );
         }
