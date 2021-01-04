@@ -97,7 +97,6 @@ const useCache = () => {
       const response = caches.has(key).then(async function (keyIsInCache) {
         if (keyIsInCache) {
           setTimeout(() => {
-            console.log(key);
             caches.delete(key);
           }, time);
           return "1";

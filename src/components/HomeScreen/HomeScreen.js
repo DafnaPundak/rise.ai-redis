@@ -9,23 +9,31 @@ function HomeScreen() {
     {
       id: 0,
       text: "",
+      type: "",
     },
   ]);
   const { responseToCommand } = useCommand();
 
-  function addCommandToHistory(command) {
+  function addCommandToHistory(command, type) {
     setCommandHistory((prevState) => [
       ...prevState,
-      { id: prevState[prevState.length - 1].id + 1, text: command },
+      { id: prevState[prevState.length - 1].id + 1, text: command, type: type },
     ]);
   }
 
   async function onSubmit(command) {
     try {
-      addCommandToHistory(command);
+      const type = "command";
+      addCommandToHistory(command, type);
       const response = await responseToCommand(command);
       if (response) {
-        addCommandToHistory(response);
+        let type = "";
+        if (response.split(/(\s+)/)[0] === "Error:") {
+          type = "error";
+        } else {
+          type = "response";
+        }
+        addCommandToHistory(response, type);
       }
     } catch (e) {
       console.log(e);

@@ -1,4 +1,4 @@
-import useCache  from"./useCache"
+import useCache from "./useCache";
 
 const useCommand = () => {
   const {
